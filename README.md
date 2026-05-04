@@ -6,6 +6,7 @@ Sanad is a unified marketplace for building materials. It connects users with mu
 
 ## Features
 - Distinct accounts for users and shop owners
+- Categories and subcategories for items
 - Admin dashboard for shop accounts
 - Advanced filtering system
 - Reviews system
