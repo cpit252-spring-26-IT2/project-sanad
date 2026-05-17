@@ -3,6 +3,9 @@ package sa.edu.kau.fcit.cpit252.project;
 // TESTING ENVIRONMENT PLEASE IGNORE CODE QUALITY IN THIS FILE
 // FINAL PROGRAM WILL BE A WEB APPLICATION
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class App {
 
     // Client class for demonstrating our current implementations
@@ -78,5 +81,36 @@ public class App {
         // Print all categories in the store
         System.out.println(fullStore.getAllCategories());
         // [STRUCTURAL] END OF COMPOSITE DESIGN PATTERN TESTING
+
+
+
+
+        // [BEHAVIORAL] STRATEGY DESIGN PATTERN TESTING
+        System.out.println("Strictly testing strategy design pattern in this section.");
+        System.out.println("==========\n");
+
+        List<ProductOffer> pipeOffers = new ArrayList<>();
+        pipeOffers.add(new ProductOffer("Pipe", "Copper", "Toney for Flooring", 25.00));
+        pipeOffers.add(new ProductOffer("Pipe", "Copper", "BuildHub Materials", 21.50));
+        pipeOffers.add(new ProductOffer("Pipe", "Copper", "Al-Sanad Hardware", 27.75));
+
+        PriceComparisonService priceComparisonService = new PriceComparisonService(new LowestPriceStrategy());
+        List<ProductOffer> lowestToHighest = priceComparisonService.compareOffers(pipeOffers);
+
+        System.out.println("Offers sorted by LOWEST price:");
+        for (ProductOffer offer : lowestToHighest) {
+            System.out.println(offer);
+        }
+
+        priceComparisonService.setStrategy(new HighestPriceStrategy());
+        List<ProductOffer> highestToLowest = priceComparisonService.compareOffers(pipeOffers);
+
+        System.out.println("\nOffers sorted by HIGHEST price:");
+        for (ProductOffer offer : highestToLowest) {
+            System.out.println(offer);
+        }
+
+        System.out.println("\n==========\n");
+        // [BEHAVIORAL] END OF STRATEGY DESIGN PATTERN TESTING
     }
 }
