@@ -1,15 +1,12 @@
 package sa.edu.kau.fcit.cpit252.project;
 
-// TESTING ENVIRONMENT PLEASE IGNORE CODE QUALITY IN THIS FILE
-// FINAL PROGRAM WILL BE A WEB APPLICATION
-
 import sa.edu.kau.fcit.cpit252.project.composite.categories.CatalogComponent;
 import sa.edu.kau.fcit.cpit252.project.composite.categories.ToolCategory;
 import sa.edu.kau.fcit.cpit252.project.composite.categories.ToolItem;
-import sa.edu.kau.fcit.cpit252.project.factory.accounts.Account;
-import sa.edu.kau.fcit.cpit252.project.factory.accounts.AccountFactory;
-import sa.edu.kau.fcit.cpit252.project.factory.accounts.CustomerAccountFactory;
-import sa.edu.kau.fcit.cpit252.project.factory.accounts.ShopAccountFactory;
+import sa.edu.kau.fcit.cpit252.project.cor.filtering.FilterCriteria;
+import sa.edu.kau.fcit.cpit252.project.cor.filtering.ProductFilterService;
+import sa.edu.kau.fcit.cpit252.project.cor.filtering.ProductListing;
+import sa.edu.kau.fcit.cpit252.project.factory.accounts.*;
 import sa.edu.kau.fcit.cpit252.project.reviews.Review;
 import sa.edu.kau.fcit.cpit252.project.reviews.ReviewService;
 import sa.edu.kau.fcit.cpit252.project.reviews.ReviewSummary;
@@ -21,6 +18,9 @@ import sa.edu.kau.fcit.cpit252.project.strategy.price.comparisons.ProductOffer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+// TESTING ENVIRONMENT PLEASE IGNORE CODE QUALITY IN THIS FILE
+// FINAL PROGRAM WILL BE A WEB APPLICATION
 
 public class App {
 
@@ -38,14 +38,24 @@ public class App {
 
         // Call the factory method to build the concrete product
         Account customerAccount = customerAccountFactory.createAccount();
-        System.out.println("Customer account created:\n" + customerAccount);
+        System.out.println("Customer account created:");
+        System.out.println("Account Type: " + customerAccount.getAccountType());
+        System.out.println("Name: " + customerAccount.getName());
+        System.out.println("Username: " + customerAccount.getUsername() + "\n");
 
         // Instantiate the concrete creator for a shop account
         AccountFactory shopAccountFactory = new ShopAccountFactory("Toney for Flooring", "toneyflooring", "bestshop123", "Flooring");
 
         // Call the factory method to build the concrete product
         Account shopAccount = shopAccountFactory.createAccount();
-        System.out.println("Shop account created:\n" + shopAccount);
+        System.out.println("Shop account created:");
+        System.out.println("Account Type: " + shopAccount.getAccountType());
+        System.out.println("Shop Name: " + shopAccount.getName());
+        System.out.println("Username: " + shopAccount.getUsername());
+        if (shopAccount instanceof ShopAccount) {
+            System.out.println("Shop Category: " + ((ShopAccount) shopAccount).getShopCategory());
+        }
+        System.out.println();
         // [CREATIONAL] END OF FACTORY METHOD DESIGN PATTERN TEST
 
 
@@ -98,9 +108,6 @@ public class App {
         System.out.println(fullStore.getAllCategories());
         // [STRUCTURAL] END OF COMPOSITE DESIGN PATTERN TESTING
 
-
-
-
         // [BEHAVIORAL] STRATEGY DESIGN PATTERN TESTING
         System.out.println("Strictly testing strategy design pattern in this section.");
         System.out.println("==========\n");
@@ -128,6 +135,43 @@ public class App {
 
         System.out.println("\n==========\n");
         // [BEHAVIORAL] END OF STRATEGY DESIGN PATTERN TESTING
+
+        // [BEHAVIORAL] CHAIN OF RESPONSIBILITY DESIGN PATTERN TESTING
+        System.out.println("Chain of Responsibility Demo - Advanced Filtering System");
+        System.out.println("==========\n");
+
+        List<ProductListing> listings = new ArrayList<>();
+        listings.add(new ProductListing("Ceramic Floor Tile", "Flooring", "Matte", "Toney Flooring", 35.0, true, 4.5));
+        listings.add(new ProductListing("Copper Pipe", "Plumbing", "3/4 inch", "Jeddah Plumbing Supplies", 25.0, true, 4.2));
+        listings.add(new ProductListing("Plastic Pipe", "Plumbing", "1/2 inch", "Jeddah Plumbing Supplies", 10.0, true, 3.9));
+        listings.add(new ProductListing("Cement Bag", "Building Materials", "50 KG", "BuildPro Materials", 18.0, true, 4.0));
+        listings.add(new ProductListing("Paint Bucket", "Paint", "White", "Red Sea Paints", 75.0, false, 4.7));
+        listings.add(new ProductListing("Hammer", "Tools", "Wooden Handle", "BuildPro Materials", 22.0, true, 4.1));
+        listings.add(new ProductListing("Bathroom Sink", "Bathroom Fixtures", "Porcelain", "Toney Flooring", 240.0, true, 4.6));
+        listings.add(new ProductListing("Electrical Cable", "Electrical", "10m", "Al Noor Electrical", 60.0, true, 4.3));
+
+        FilterCriteria filterCriteria = new FilterCriteria();
+        filterCriteria.setCategory("Plumbing");
+        filterCriteria.setMinPrice(10.0);
+        filterCriteria.setMaxPrice(30.0);
+        filterCriteria.setAvailableOnly(true);
+        filterCriteria.setMinRating(4.0);
+
+        ProductFilterService productFilterService = new ProductFilterService();
+        List<ProductListing> filteredListings = productFilterService.filterProducts(listings, filterCriteria);
+
+        System.out.println("Original product list:");
+        for (ProductListing listing : listings) {
+            System.out.println(listing);
+        }
+
+        System.out.println("\nFiltered result:");
+        for (ProductListing listing : filteredListings) {
+            System.out.println(listing);
+        }
+
+        System.out.println("\n==========\n");
+        // [BEHAVIORAL] END OF CHAIN OF RESPONSIBILITY DESIGN PATTERN TESTING
 
         // REVIEWS SYSTEM DEMO
         System.out.println("Reviews System Demo - 5-Star Ratings");
