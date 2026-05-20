@@ -1,4 +1,4 @@
-package sa.edu.kau.fcit.cpit252.project;
+package sa.edu.kau.fcit.cpit252.project.factory;
 
 // The customer account concrete product.
 // This concrete product implements the Account interface and has the appropriate "attributes"

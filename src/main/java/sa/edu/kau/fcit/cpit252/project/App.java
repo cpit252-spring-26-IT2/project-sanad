@@ -3,6 +3,18 @@ package sa.edu.kau.fcit.cpit252.project;
 // TESTING ENVIRONMENT PLEASE IGNORE CODE QUALITY IN THIS FILE
 // FINAL PROGRAM WILL BE A WEB APPLICATION
 
+import sa.edu.kau.fcit.cpit252.project.composite.CatalogComponent;
+import sa.edu.kau.fcit.cpit252.project.composite.ToolCategory;
+import sa.edu.kau.fcit.cpit252.project.composite.ToolItem;
+import sa.edu.kau.fcit.cpit252.project.factory.Account;
+import sa.edu.kau.fcit.cpit252.project.factory.AccountFactory;
+import sa.edu.kau.fcit.cpit252.project.factory.CustomerAccountFactory;
+import sa.edu.kau.fcit.cpit252.project.factory.ShopAccountFactory;
+import sa.edu.kau.fcit.cpit252.project.strategy.HighestPriceStrategy;
+import sa.edu.kau.fcit.cpit252.project.strategy.LowestPriceStrategy;
+import sa.edu.kau.fcit.cpit252.project.strategy.PriceComparisonService;
+import sa.edu.kau.fcit.cpit252.project.strategy.ProductOffer;
+
 import java.util.ArrayList;
 import java.util.List;
 

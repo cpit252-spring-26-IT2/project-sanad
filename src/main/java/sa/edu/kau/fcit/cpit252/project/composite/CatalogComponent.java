@@ -1,4 +1,4 @@
-package sa.edu.kau.fcit.cpit252.project;
+package sa.edu.kau.fcit.cpit252.project.composite;
 import java.util.Set;
 
 // The CatalogComponent interface (product interface).
