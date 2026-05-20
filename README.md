@@ -199,7 +199,7 @@ The project publishes two custom images:
 - `ammarx4/project-sanad-frontend:latest`
 - `ammarx4/project-sanad-frontend:v1.0.0`
 
-PostgreSQL uses the official `postgres:16` image and does not need a custom Docker Hub repository.
+PostgreSQL uses the official `postgres:16` image.
 
 Do not put Docker Hub passwords, access tokens, or private `.env` files in this repository. Run `docker login` locally and use a Docker Hub access token if Docker asks for one.
 
@@ -336,5 +336,3 @@ https://hub.docker.com/r/ammarx4/project-sanad-backend
 
 Frontend image:
 https://hub.docker.com/r/ammarx4/project-sanad-frontend
-
-Make both Docker Hub repositories public if the instructor needs to pull them without logging in.
