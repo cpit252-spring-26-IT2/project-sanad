@@ -273,7 +273,7 @@ docker login
 
 ## Docker Compose / Portainer Stack
 
-The stack-ready [docker-compose.yml](/Users/mona/Downloads/SANAD/project-sanad/docker-compose.yml) runs:
+The stack-ready docker-compose.yml runs:
 - Frontend: Nginx serving the built React app
 - Backend: Spring Boot API
 - Database: PostgreSQL `postgres:16`
@@ -320,7 +320,7 @@ Expected local URLs:
 
 1. Build and push the backend and frontend images to Docker Hub.
 2. Create a new Stack in Portainer.
-3. Paste the content of [docker-compose.yml](/Users/mona/Downloads/SANAD/project-sanad/docker-compose.yml).
+3. Paste the content of docker-compose.yml.
 4. Set stack environment variables as needed:
    - `DOCKERHUB_USERNAME=ammarx4`
    - `POSTGRES_DB=sanad`
