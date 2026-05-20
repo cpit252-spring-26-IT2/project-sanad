@@ -1,4 +1,4 @@
-package sa.edu.kau.fcit.cpit252.project.strategy;
+package sa.edu.kau.fcit.cpit252.project.strategy.price.comparisons;
 
 public class ProductOffer {
     private final String productName;

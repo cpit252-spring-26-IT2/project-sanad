@@ -1,4 +1,4 @@
-package sa.edu.kau.fcit.cpit252.project.factory;
+package sa.edu.kau.fcit.cpit252.project.factory.accounts;
 
 // The shop account concrete product.
 // This concrete product implements the Account interface and has the appropriate "attributes"

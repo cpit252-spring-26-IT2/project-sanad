@@ -1,4 +1,4 @@
-package sa.edu.kau.fcit.cpit252.project.factory;
+package sa.edu.kau.fcit.cpit252.project.factory.accounts;
 
 // The account factory absract class (creator abstract class).
 // It defers the instantiation of the account object to its concrete subclasses.

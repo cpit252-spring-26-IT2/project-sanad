@@ -1,4 +1,4 @@
-package sa.edu.kau.fcit.cpit252.project.factory;
+package sa.edu.kau.fcit.cpit252.project.factory.accounts;
 
 // The customer account factory concrete creator class.
 // This concrete creator class implements the factory method to create and

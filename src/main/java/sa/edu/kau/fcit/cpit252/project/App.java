@@ -3,17 +3,21 @@ package sa.edu.kau.fcit.cpit252.project;
 // TESTING ENVIRONMENT PLEASE IGNORE CODE QUALITY IN THIS FILE
 // FINAL PROGRAM WILL BE A WEB APPLICATION
 
-import sa.edu.kau.fcit.cpit252.project.composite.CatalogComponent;
-import sa.edu.kau.fcit.cpit252.project.composite.ToolCategory;
-import sa.edu.kau.fcit.cpit252.project.composite.ToolItem;
-import sa.edu.kau.fcit.cpit252.project.factory.Account;
-import sa.edu.kau.fcit.cpit252.project.factory.AccountFactory;
-import sa.edu.kau.fcit.cpit252.project.factory.CustomerAccountFactory;
-import sa.edu.kau.fcit.cpit252.project.factory.ShopAccountFactory;
-import sa.edu.kau.fcit.cpit252.project.strategy.HighestPriceStrategy;
-import sa.edu.kau.fcit.cpit252.project.strategy.LowestPriceStrategy;
-import sa.edu.kau.fcit.cpit252.project.strategy.PriceComparisonService;
-import sa.edu.kau.fcit.cpit252.project.strategy.ProductOffer;
+import sa.edu.kau.fcit.cpit252.project.composite.categories.CatalogComponent;
+import sa.edu.kau.fcit.cpit252.project.composite.categories.ToolCategory;
+import sa.edu.kau.fcit.cpit252.project.composite.categories.ToolItem;
+import sa.edu.kau.fcit.cpit252.project.factory.accounts.Account;
+import sa.edu.kau.fcit.cpit252.project.factory.accounts.AccountFactory;
+import sa.edu.kau.fcit.cpit252.project.factory.accounts.CustomerAccountFactory;
+import sa.edu.kau.fcit.cpit252.project.factory.accounts.ShopAccountFactory;
+import sa.edu.kau.fcit.cpit252.project.reviews.Review;
+import sa.edu.kau.fcit.cpit252.project.reviews.ReviewService;
+import sa.edu.kau.fcit.cpit252.project.reviews.ReviewSummary;
+import sa.edu.kau.fcit.cpit252.project.reviews.ReviewTargetType;
+import sa.edu.kau.fcit.cpit252.project.strategy.price.comparisons.HighestPriceStrategy;
+import sa.edu.kau.fcit.cpit252.project.strategy.price.comparisons.LowestPriceStrategy;
+import sa.edu.kau.fcit.cpit252.project.strategy.price.comparisons.PriceComparisonService;
+import sa.edu.kau.fcit.cpit252.project.strategy.price.comparisons.ProductOffer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,5 +128,37 @@ public class App {
 
         System.out.println("\n==========\n");
         // [BEHAVIORAL] END OF STRATEGY DESIGN PATTERN TESTING
+
+        // REVIEWS SYSTEM DEMO
+        System.out.println("Reviews System Demo - 5-Star Ratings");
+        System.out.println("==========\n");
+
+        ReviewService reviewService = new ReviewService();
+
+        reviewService.addReview(new Review("Riyad Mahrez", ReviewTargetType.PRODUCT, "Copper Pipe", 5));
+        reviewService.addReview(new Review("Ammar", ReviewTargetType.PRODUCT, "Copper Pipe", 4));
+        reviewService.addReview(new Review("Abdulaziz", ReviewTargetType.PRODUCT, "Plastic Pipe", 3));
+        reviewService.addReview(new Review("Abdullah", ReviewTargetType.SHOP, "Toney Flooring", 5));
+        reviewService.addReview(new Review("Riyad Mahrez", ReviewTargetType.SHOP, "Jeddah Plumbing Supplies", 4));
+
+        System.out.println("Individual reviews:");
+        for (Review review : reviewService.getAllReviews()) {
+            System.out.println(review);
+        }
+
+        ReviewSummary copperPipeSummary = reviewService.getSummary(ReviewTargetType.PRODUCT, "Copper Pipe");
+        ReviewSummary toneyFlooringSummary = reviewService.getSummary(ReviewTargetType.SHOP, "Toney Flooring");
+
+        System.out.println("\nProduct: " + copperPipeSummary.getTargetName());
+        System.out.println("Average Rating: " + copperPipeSummary.getAverageRating() + " / 5");
+        System.out.println("Visual Rating: " + copperPipeSummary.getVisualRating());
+        System.out.println("Total Reviews: " + copperPipeSummary.getTotalReviews());
+
+        System.out.println("\nShop: " + toneyFlooringSummary.getTargetName());
+        System.out.println("Average Rating: " + toneyFlooringSummary.getAverageRating() + " / 5");
+        System.out.println("Visual Rating: " + toneyFlooringSummary.getVisualRating());
+        System.out.println("Total Reviews: " + toneyFlooringSummary.getTotalReviews());
+
+        System.out.println("\n==========\n");
     }
 }

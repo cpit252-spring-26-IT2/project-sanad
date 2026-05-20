@@ -1,4 +1,4 @@
-package sa.edu.kau.fcit.cpit252.project.factory;
+package sa.edu.kau.fcit.cpit252.project.factory.accounts;
 
 
 // The Account interface (product interface).
