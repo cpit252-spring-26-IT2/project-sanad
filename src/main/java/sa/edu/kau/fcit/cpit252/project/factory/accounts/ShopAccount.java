@@ -23,7 +23,7 @@ public class ShopAccount implements Account {
     // So we will return the account type as "SHOP" here.
     @Override
     public String getAccountType() {
-        return "SHOP";
+        return "SHOP_OWNER";
     }
 
     @Override
@@ -51,7 +51,6 @@ public class ShopAccount implements Account {
         return "Account Type: " + getAccountType() +
                 "\nShop Name: " + getName() +
                 "\nUsername: " + getUsername() +
-                "\nPassword: " + getPassword() +
                 "\nShop Category: " + getShopCategory() + "\n";
     }
 }

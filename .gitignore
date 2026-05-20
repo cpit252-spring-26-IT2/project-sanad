@@ -3,6 +3,13 @@
 
 # Log file
 *.log
+.DS_Store
+
+# Local environment files
+.env
+.env.local
+frontend/.env
+frontend/.env.local
 
 # BlueJ files
 *.ctxt
@@ -25,6 +32,7 @@ replay_pid*
 
 # Maven
 target/
+.m2repo/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -48,3 +56,7 @@ buildNumber.properties
 *.iws
 out/
 META-INF
+
+# Frontend
+frontend/node_modules/
+frontend/dist/

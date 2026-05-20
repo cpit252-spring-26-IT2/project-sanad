@@ -1,0 +1,65 @@
+services:
+  frontend:
+    image: ${DOCKERHUB_USERNAME:-ammarx4}/project-sanad-frontend:latest
+    container_name: sanad-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT:-5973}:5973"
+    networks:
+      - sanad-net
+
+  backend:
+    image: ${DOCKERHUB_USERNAME:-ammarx4}/project-sanad-backend:latest
+    container_name: sanad-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 8284
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-sanad}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-sanad}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-sanad}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5973}
+      TOKEN_VALIDITY_HOURS: ${TOKEN_VALIDITY_HOURS:-24}
+    ports:
+      - "${BACKEND_PORT:-8284}:8284"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8284/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - sanad-net
+
+  postgres:
+    image: postgres:16
+    container_name: sanad-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sanad}
+      POSTGRES_USER: ${POSTGRES_USER:-sanad}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sanad}
+    ports:
+      - "${POSTGRES_HOST_PORT:-2832}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sanad} -d ${POSTGRES_DB:-sanad}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    volumes:
+      - sanad_postgres_data:/var/lib/postgresql/data
+    networks:
+      - sanad-net
+
+networks:
+  sanad-net:
+    driver: bridge
+
+volumes:
+  sanad_postgres_data:

@@ -43,7 +43,6 @@ public class CustomerAccount implements Account {
     public String toString() {
         return "Account Type: " + getAccountType() +
                 "\nName: " + getName() +
-                "\nUsername: " + getUsername() +
-                "\nPassword: " + getPassword() + "\n";
+                "\nUsername: " + getUsername() + "\n";
     }
 }
