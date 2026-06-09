@@ -1,338 +1,99 @@
 # Project Sanad سند
 
-Project Sanad is a CPIT-252 marketplace prototype for comparing building-material prices across multiple shops.
+## Description
 
-This repository now contains:
-- Spring Boot Java backend API
-- React + Vite + TypeScript frontend
-- PostgreSQL setup with Docker Compose
+Project Sanad is a building-material marketplace prototype for comparing product prices across multiple shops. It includes a Spring Boot backend API, a React + Vite frontend, and PostgreSQL database setup with Flyway migrations and seed data.
 
-## Tech Stack
+## Features
+- User registration and login for customers and shop owners
+- Product browsing with search, category, price, availability, and rating filters
+- Price comparison across shop offers
+- Product detail pages with offer lists
+- Rating-only review system with review summaries (requires an account to submit reviews)
+- Seeded data for products, shops, categories, users, and reviews
+- Docker Compose setup for frontend, backend, and PostgreSQL
 
-### Backend
-- Java 17
-- Spring Boot (Web, Validation, Data JPA)
-- PostgreSQL
-- Flyway migrations + seed data
-- JUnit / Spring Boot tests
+## Usage
 
-### Frontend
-- React + TypeScript + Vite
-- TanStack React Query
-- Wouter routing
-- Tailwind UI components
+To build and run the app, use Docker Compose (Recommended Setup):
 
-## Project Structure
-
-```text
-project-sanad/
-  pom.xml
-  src/main/java/sa/edu/kau/fcit/cpit252/project/...
-  src/main/resources/
-  frontend/
-    package.json
-    index.html
-    src/...
-    vite.config.ts
-  docker-compose.yml
-  README.md
-```
-
-## Database Setup (PostgreSQL)
-
-1. Start PostgreSQL:
-
-```bash
+```shell
 docker compose up -d
 ```
 
-2. Default dev DB values in `docker-compose.yml`:
-- database: `sanad`
-- username: `sanad`
-- password: `sanad`
-- port: `5432`
+For local development without Docker:
 
-3. Override with environment variables if needed:
-- `POSTGRES_DB`
-- `POSTGRES_USER`
-- `POSTGRES_PASSWORD`
-
-## Backend Run
-
-Set environment variables (optional, defaults already provided):
-- `SPRING_DATASOURCE_URL` (default `jdbc:postgresql://localhost:5432/sanad`)
-- `SPRING_DATASOURCE_USERNAME` (default `sanad`)
-- `SPRING_DATASOURCE_PASSWORD` (default `sanad`)
-- `CORS_ALLOWED_ORIGINS` (default `http://localhost:5173`)
-
-Run backend:
-
-```bash
+```shell
 mvn spring-boot:run
-```
 
-Backend base URL:
-- `http://localhost:8080`
-
-Health check:
-- `GET http://localhost:8080/api/health`
-
-## Frontend Run
-
-From `frontend/`:
-
-```bash
+cd frontend
 npm install
 npm run dev
 ```
 
-Frontend URL:
-- `http://localhost:5173`
+## Screenshots
 
-Notes:
-- Vite dev proxy forwards `/api` to `http://localhost:8080`
-- `BASE_PATH` and Replit-specific Vite plugins were removed for local dev simplicity
+### Home Page
 
-## API Overview
+Home page showcasing the main features of the marketplace, including product search and category browsing.
 
-Base path: `/api`
+![Home Page](screenshots/home.png)
 
-### Health
-- `GET /api/health`
+### Products Pages
 
-### Auth
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/auth/me` (Bearer token)
+Light theme and dark theme views of the products pages, showcasing the product listing with filters and price comparison features.
 
-### Categories
-- `GET /api/categories`
+![Light theme Products Page](screenshots/productsLight.png)
 
-### Products / Listings
-- `GET /api/products`
-  - query params: `search`, `category`, `minPrice`, `maxPrice`, `availableOnly`, `minRating`, `sort`, `page`, `limit`
-- `GET /api/products/{id}`
-- `GET /api/products/{id}/offers?sort=price_asc|price_desc`
-- `GET /api/compare?productId={id}&sort=price_asc|price_desc`
+![Dark theme Products Page](screenshots/productsDark.png)
 
-### Reviews (1-5 stars only)
-- `POST /api/reviews` (Bearer token)
-- `GET /api/reviews/summary?targetType=PRODUCT&targetId={id}`
-- `GET /api/reviews/summary?targetType=SHOP&targetId={id}`
+![Dark theme Products Filtered Page](screenshots/productsFilterDark.png)
 
-## Demo Accounts (Seeded)
+![Dark theme Product Detail Page](screenshots/productDetailDark.png)
 
-Customer:
-- email: `customer@sanad.sa`
-- password: `customer123`
+## The use of generative AI tools
 
-Shop owner:
-- email: `toney@sanad.sa`
-- password: `shop123`
+We used OpenAI ChatGPT 5.5, 5.3-Codex, and Google Gemini 3 Pro models as assistive tools for this project. The tools were only used for refactoring our code, refactoring the repository structure, and helping us figure out some hurdles on the way (such as, if using a specific design pattern would improve the efficiency of the provided feature/code).
 
-## Seeded Demo Data
+At no point in time was generative AI used to complete code without our direct involvement, or generate multiple files at a time filled with written code.
 
-Shops:
-- Toney Flooring
-- Jeddah Plumbing Supplies
-- Al Noor Electrical
-- BuildPro Materials
-- Red Sea Paints
+All generative AI output was checked, edited, and approved by our team.
 
-Categories:
-- Flooring
-- Plumbing
-- Electrical
-- Paint
-- Tools
-- Bathroom Fixtures
-- Building Materials
+Some examples of how we used generative AI tools include:
 
-Products:
-- Ceramic Floor Tile
-- Copper Pipe
-- Plastic Pipe
-- Cement Bag
-- Paint Bucket
-- Hammer
-- Bathroom Sink
-- Electrical Cable
+Google Gemini 3 Pro, 20/04/2026, "Can you give me the general structure of what the factory method will look like? in terms of classes and methods."
 
-All seeded prices use SAR.
+Google Gemini 3 Pro, 22/04/2026, "Is this implementation of the composite design pattern correct? [attached code]"
 
-## Implemented Features
+OpenAI ChatGPT 5.5, 27/04/2026, "Ok well before anything, here is the Kanban Board attached to this message.
+We chose a creational design pattern for the Accounts feature, and a structural design pattern for the categories feature.
+We have to implement a behavioral design pattern, but we still haven't decided where to implement it (for which feature I mean).
+I have attached all the design patterns we can use for the project, but if there is a better way without using design patterns, we're open to it. Just know that we're required to have 1 of each creational, structural, and behavioral design pattern. [attached 2 images]"
 
-- Account registration/login with hashed passwords
-- Customer and shop-owner roles
-- Category tree API
-- Product browsing with advanced filtering
-- Price comparison endpoint (low/high sort)
-- Product offers endpoint
-- Reviews with 1-5 star ratings only (no text comments)
-- Review summaries (average + count + visual stars)
-- Frontend integration to Java backend APIs
-- Global configurable CORS for frontend dev
+OpenAI 5.3-Codex, 12/05/2026, "Instead of the nested loops, could we use HashMaps/HashSets to compare? In the files HighestPriceStrategy.java and LowestPriceStrategy.java. Don't write code into the files, just think and analyze."
 
-## Pending / Prototype-Only Features
+OpenAI 5.3-Codex, 20/05/2026, "Implement at least 95% unit test coverage. Do not modify any other files, unless needed. [attached whole project codebase]"
 
-These pages remain intentionally non-final placeholders in this integration scope:
-- Cart and checkout
-- Orders history/details
-- Support messaging workflow
-- Recommendation engine
-- Live inventory synchronization
+## License
 
-## Design Patterns Used
+MIT License
 
-- Factory Method: account creation for customer/shop-owner registration
-- Composite: category tree composition
-- Strategy: price comparison sorting (lowest/highest)
-- Chain of Responsibility: advanced product filtering
+Copyright (c) 2026, Sanad Team
 
-The reviews feature is implemented as a straightforward service + persistence flow; no additional reviews-specific pattern is claimed.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## Docker Hub Publishing
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-The project publishes two custom images:
-- `ammarx4/project-sanad-backend:latest`
-- `ammarx4/project-sanad-backend:v1.0.0`
-- `ammarx4/project-sanad-frontend:latest`
-- `ammarx4/project-sanad-frontend:v1.0.0`
-
-PostgreSQL uses the official `postgres:16` image.
-
-Do not put Docker Hub passwords, access tokens, or private `.env` files in this repository. Run `docker login` locally and use a Docker Hub access token if Docker asks for one.
-
-### macOS / Linux / Git Bash
-
-```bash
-export DOCKERHUB_USERNAME=ammarx4
-docker login
-
-docker build -f Dockerfile.backend \
-  -t "$DOCKERHUB_USERNAME/project-sanad-backend:latest" \
-  -t "$DOCKERHUB_USERNAME/project-sanad-backend:v1.0.0" \
-  .
-
-docker build -f frontend/Dockerfile \
-  -t "$DOCKERHUB_USERNAME/project-sanad-frontend:latest" \
-  -t "$DOCKERHUB_USERNAME/project-sanad-frontend:v1.0.0" \
-  ./frontend
-
-docker push "$DOCKERHUB_USERNAME/project-sanad-backend:latest"
-docker push "$DOCKERHUB_USERNAME/project-sanad-backend:v1.0.0"
-
-docker push "$DOCKERHUB_USERNAME/project-sanad-frontend:latest"
-docker push "$DOCKERHUB_USERNAME/project-sanad-frontend:v1.0.0"
-```
-
-### Windows PowerShell
-
-```powershell
-$env:DOCKERHUB_USERNAME="ammarx4"
-docker login
-
-docker build -f Dockerfile.backend `
-  -t "${env:DOCKERHUB_USERNAME}/project-sanad-backend:latest" `
-  -t "${env:DOCKERHUB_USERNAME}/project-sanad-backend:v1.0.0" `
-  .
-
-docker build -f frontend/Dockerfile `
-  -t "${env:DOCKERHUB_USERNAME}/project-sanad-frontend:latest" `
-  -t "${env:DOCKERHUB_USERNAME}/project-sanad-frontend:v1.0.0" `
-  ./frontend
-
-docker push "${env:DOCKERHUB_USERNAME}/project-sanad-backend:latest"
-docker push "${env:DOCKERHUB_USERNAME}/project-sanad-backend:v1.0.0"
-
-docker push "${env:DOCKERHUB_USERNAME}/project-sanad-frontend:latest"
-docker push "${env:DOCKERHUB_USERNAME}/project-sanad-frontend:v1.0.0"
-```
-
-### Helper Scripts
-
-The scripts require `DOCKERHUB_USERNAME` and never store passwords or tokens.
-
-macOS / Linux / Git Bash:
-
-```bash
-export DOCKERHUB_USERNAME=ammarx4
-docker login
-./scripts/docker-build.sh
-./scripts/docker-push.sh
-```
-
-Windows PowerShell:
-
-```powershell
-$env:DOCKERHUB_USERNAME="ammarx4"
-docker login
-.\scripts\docker-build.ps1
-.\scripts\docker-push.ps1
-```
-
-## Docker Compose / Portainer Stack
-
-The stack-ready docker-compose.yml runs:
-- Frontend: Nginx serving the built React app
-- Backend: Spring Boot API
-- Database: PostgreSQL `postgres:16`
-
-Default host ports:
-- Frontend: `5973`
-- Backend health: `8284`
-- PostgreSQL: `2832`
-
-The Compose file uses `DOCKERHUB_USERNAME` for image names:
-- `${DOCKERHUB_USERNAME:-ammarx4}/project-sanad-backend:latest`
-- `${DOCKERHUB_USERNAME:-ammarx4}/project-sanad-frontend:latest`
-
-### Run Locally With Docker Compose
-
-macOS / Linux / Git Bash:
-
-```bash
-export DOCKERHUB_USERNAME=ammarx4
-docker compose up -d
-```
-
-Windows PowerShell:
-
-```powershell
-$env:DOCKERHUB_USERNAME="ammarx4"
-docker compose up -d
-```
-
-Useful commands:
-
-```bash
-docker compose ps
-docker compose logs -f backend
-docker compose logs -f frontend
-docker compose down
-```
-
-Expected local URLs:
-- Frontend: `http://localhost:5973`
-- Backend health: `http://localhost:8284/api/health`
-
-### Deploy in Portainer
-
-1. Build and push the backend and frontend images to Docker Hub.
-2. Create a new Stack in Portainer.
-3. Paste the content of docker-compose.yml.
-4. Set stack environment variables as needed:
-   - `DOCKERHUB_USERNAME=ammarx4`
-   - `POSTGRES_DB=sanad`
-   - `POSTGRES_USER=sanad`
-   - `POSTGRES_PASSWORD=<choose-a-secure-password>`
-   - Optional: `FRONTEND_PORT`, `BACKEND_PORT`, `POSTGRES_HOST_PORT`, `CORS_ALLOWED_ORIGINS`
-5. Deploy the stack.
-
-## Final Docker Hub Links
-
-Backend image:
-https://hub.docker.com/r/ammarx4/project-sanad-backend
-
-Frontend image:
-https://hub.docker.com/r/ammarx4/project-sanad-frontend
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
